@@ -55,4 +55,5 @@ export default usersSlice.reducer;
 
 export const selectUsers = (state: RootState) => state.users.users;
 export const selectStatus = (state: RootState) => state.users.status;
-export const selectUsersLoading = (state: RootState) => state.users.status === UsersStateStatus.loading;
+export const selectUsersLoading = (state: RootState) =>
+  state.users.status === UsersStateStatus.loading;
