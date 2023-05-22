@@ -49,8 +49,8 @@ export const AuthenticationLayout: React.FC = () => {
       </Form.Item>
       <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
         <Space>
-          <Button type="primary" htmlType="submit">
-            Submit
+          <Button type="primary" htmlType="button">
+            Login
           </Button>
           <Button htmlType="button" onClick={onReset}>
             Reset

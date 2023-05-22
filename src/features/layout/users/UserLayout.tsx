@@ -8,7 +8,6 @@ import { Button, Card, Col, Modal, Row, Space, Typography } from "antd";
 import React, { useEffect, useState } from "react";
 import { UserInfo } from "@features/users";
 import { getUsers } from "@store/actions/get-users";
-import { AuthenticationLayout } from "@features/layout/authentication/AuthenticationLayout";
 import styles from "./UserLayout.module.scss";
 import { useAppDispatch, useAppSelector } from "../../../hooks";
 
@@ -29,7 +28,6 @@ export const UserLayout: React.FC = () => {
 
   return (
     <>
-      <AuthenticationLayout />
       <Row gutter={[12, 30]}>
         <Col>
           <Space direction="horizontal" size={32}>
@@ -55,7 +53,7 @@ export const UserLayout: React.FC = () => {
             style={{ width: 300 }}
             actions={[
               <SettingOutlined key="setting" />,
-              <EditOutlined key="edit" />,
+              <EditOutlined key="edit" onClick={onButtonClick} />,
               <EllipsisOutlined key="ellipsis" />,
             ]}
           >
