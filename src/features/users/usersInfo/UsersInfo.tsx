@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Card, Space, Typography } from "antd";
+import { Button, Card, Form, Space, Typography } from "antd";
 import {
   EditOutlined,
   EllipsisOutlined,
@@ -14,17 +14,35 @@ type UsersInfoType = {
 
 export const UsersInfo: React.FC<UsersInfoType> = ({ user }) => {
   const [isEdit, setIsEdit] = useState(false);
+  const [form] = Form.useForm();
   return (
     <Card
       style={{ width: 300 }}
       actions={[
         <SettingOutlined key="setting" />,
-        <EditOutlined key="edit" onClick={() => setIsEdit(!isEdit)} />,
+        <EditOutlined key="edit" onClick={() => setIsEdit(true)} />,
         <EllipsisOutlined key="ellipsis" />,
       ]}
     >
       {isEdit ? (
-        <EditUserInfo user={user} />
+        <Form
+          labelCol={{ span: 8 }}
+          wrapperCol={{ span: 16 }}
+          name="edit"
+          form={form}
+        >
+          <EditUserInfo user={user} />
+          <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
+            <Space align="center">
+              <Button type="primary" htmlType="submit">
+                Save
+              </Button>
+              <Button htmlType="button" onClick={() => setIsEdit(false)}>
+                Close
+              </Button>
+            </Space>
+          </Form.Item>
+        </Form>
       ) : (
         <Space direction="vertical">
           <Typography.Text>Name: {user.name}</Typography.Text>
