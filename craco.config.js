@@ -14,6 +14,7 @@ module.exports = {
       "@theme": path.resolve(__dirname, "./src/theme"),
       "@utils": path.resolve(__dirname, "./src/utils"),
       "@httpClient": path.resolve(__dirname, "./src/httpClient"),
+      "@hooks": path.resolve(__dirname, "./src/hooks"),
     },
   },
 };
