@@ -1,8 +1,9 @@
 import React from "react";
 import "./App.css";
 import { ConfigProvider } from "antd";
-import { UsersPage } from "@pages/UsersPage";
 import { colors } from "@theme/colors";
+import { RouterProvider } from "react-router-dom";
+import { router } from "@router/Router";
 
 function App() {
   return (
@@ -24,7 +25,7 @@ function App() {
       {/* <Suspense fallback={<LoadingPage />}> */}
       {/* <RouterProvider router={router} /> */}
       {/* </Suspense> */}
-      <UsersPage />
+      <RouterProvider router={router} />
     </ConfigProvider>
   );
 }
