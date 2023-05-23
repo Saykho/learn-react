@@ -1,5 +1,5 @@
 import React, { ChangeEvent, useState } from "react";
-import { Button, Form, Input, Space } from "antd";
+import { Form, Input } from "antd";
 import { User } from "@models/user.model";
 
 type EditUserInfoType = {
@@ -25,7 +25,6 @@ export const EditUserInfo: React.FC<EditUserInfoType> = ({ user }) => {
   const [inputSuite, setInputSuite] = useState({
     suite: user.address.suite,
   });
-  const [form] = Form.useForm();
   // const dispatch = useAppDispatch();
   const onUserNameChange = (e: ChangeEvent<HTMLInputElement>) => {
     const target = e.target as HTMLInputElement;
@@ -63,16 +62,8 @@ export const EditUserInfo: React.FC<EditUserInfoType> = ({ user }) => {
       suite: target.value,
     });
   };
-  const onReset = () => {
-    form.resetFields();
-  };
   return (
-    <Form
-      labelCol={{ span: 8 }}
-      wrapperCol={{ span: 16 }}
-      name="edit"
-      form={form}
-    >
+    <>
       <Form.Item label="Name">
         <Input
           type="text"
@@ -133,16 +124,6 @@ export const EditUserInfo: React.FC<EditUserInfoType> = ({ user }) => {
           }}
         />
       </Form.Item>
-      <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-        <Space>
-          <Button type="primary" htmlType="submit">
-            Save
-          </Button>
-          <Button htmlType="button" onClick={onReset}>
-            Reset
-          </Button>
-        </Space>
-      </Form.Item>
-    </Form>
+    </>
   );
 };
