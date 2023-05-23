@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button, Card, Form, Space, Typography } from "antd";
+import { Card, Space, Typography } from "antd";
 import {
   EditOutlined,
   EllipsisOutlined,
@@ -7,6 +7,8 @@ import {
 } from "@ant-design/icons";
 import { User } from "@models/user.model";
 import { EditUserInfo } from "@features/users/editUserInfo";
+import { editUserInfoTest } from "@store/reducers/user";
+import { useAppDispatch } from "../../../hooks";
 
 type UsersInfoType = {
   user: User;
@@ -14,7 +16,8 @@ type UsersInfoType = {
 
 export const UsersInfo: React.FC<UsersInfoType> = ({ user }) => {
   const [isEdit, setIsEdit] = useState(false);
-  const [form] = Form.useForm();
+  const dispatch = useAppDispatch();
+
   return (
     <Card
       style={{ width: 300 }}
@@ -25,24 +28,14 @@ export const UsersInfo: React.FC<UsersInfoType> = ({ user }) => {
       ]}
     >
       {isEdit ? (
-        <Form
-          labelCol={{ span: 8 }}
-          wrapperCol={{ span: 16 }}
-          name="edit"
-          form={form}
-        >
-          <EditUserInfo user={user} />
-          <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-            <Space align="center">
-              <Button type="primary" htmlType="submit">
-                Save
-              </Button>
-              <Button htmlType="button" onClick={() => setIsEdit(false)}>
-                Close
-              </Button>
-            </Space>
-          </Form.Item>
-        </Form>
+        <EditUserInfo
+          onSave={(newUser) => {
+            setIsEdit(false);
+            console.log(newUser);
+            dispatch(editUserInfoTest(newUser));
+          }}
+          user={user}
+        />
       ) : (
         <Space direction="vertical">
           <Typography.Text>Name: {user.name}</Typography.Text>

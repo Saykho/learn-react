@@ -23,11 +23,12 @@ const initialState: UsersState = {
   loading: false,
 };
 
+// TODO: createReducer
 export const usersSlice = createSlice({
   name: "users",
   initialState,
   reducers: {
-    editUserInfo: (state, { payload }: PayloadAction<User>) => {
+    editUserInfoTest: (state, { payload }: PayloadAction<User>) => {
       const foundUser = state.users.find((u) => u.id === payload.id);
       if (foundUser) {
         foundUser.name = payload.name;
@@ -37,10 +38,6 @@ export const usersSlice = createSlice({
         foundUser.address.street = payload.address.street;
         foundUser.address.suite = payload.address.suite;
       }
-      return {
-        ...state,
-        users: [...state.users],
-      };
     },
   },
   extraReducers: (builder) => {
@@ -69,7 +66,7 @@ export const usersSlice = createSlice({
   },
 });
 
-export const { editUserInfo } = usersSlice.actions;
+export const { editUserInfoTest } = usersSlice.actions;
 export default usersSlice.reducer;
 
 export const selectUsers = (state: RootState) => state.users.users;
