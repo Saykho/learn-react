@@ -1,13 +1,9 @@
-import {
-  EditOutlined,
-  EllipsisOutlined,
-  SettingOutlined,
-  ZoomInOutlined,
-} from "@ant-design/icons";
-import { Button, Card, Col, Modal, Row, Space, Typography } from "antd";
+import { ZoomInOutlined } from "@ant-design/icons";
+import { Button, Col, Modal, Row, Space, Typography } from "antd";
 import React, { useEffect, useState } from "react";
 import { UserInfo } from "@features/users";
 import { getUsers } from "@store/actions/get-users";
+import { UsersInfo } from "@features/users/usersInfo";
 import styles from "./UserLayout.module.scss";
 import { useAppDispatch, useAppSelector } from "../../../hooks";
 
@@ -18,7 +14,7 @@ export const UserLayout: React.FC = () => {
 
   useEffect(() => {
     dispatch(getUsers());
-  });
+  }, []);
   const onButtonClick = () => {
     setIsOpenModal(true);
   };
@@ -46,26 +42,11 @@ export const UserLayout: React.FC = () => {
       <Modal open={isOpenModal} onOk={onModalClose} onCancel={onModalClose}>
         <UserInfo userName="Alex Smoth" />
       </Modal>
-      <Row gutter={[48, 16]} wrap>
+      <Row gutter={[48, 16]} justify="center">
         {users.map((user) => (
-          <Card
-            key={user.id}
-            style={{ width: 300 }}
-            actions={[
-              <SettingOutlined key="setting" />,
-              <EditOutlined key="edit" onClick={onButtonClick} />,
-              <EllipsisOutlined key="ellipsis" />,
-            ]}
-          >
-            <Space direction="vertical">
-              <Col>Name: {user.name}</Col>
-              <Col>Nickname: {user.username}</Col>
-              <Col>Email: {user.email}</Col>
-              <Col>City: {user.address.city}</Col>
-              <Col>Street: {user.address.street}</Col>
-              <Col>Suite: {user.address.suite}</Col>
-            </Space>
-          </Card>
+          <Col key={user.id}>
+            <UsersInfo user={user} />
+          </Col>
         ))}
       </Row>
     </>
