@@ -1,5 +1,5 @@
 import { User } from "@models/user.model";
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { getUsers } from "@store/actions/get-users";
 // eslint-disable-next-line import/no-cycle
 import { RootState } from "@store/index";
@@ -26,19 +26,37 @@ const initialState: UsersState = {
 export const usersSlice = createSlice({
   name: "users",
   initialState,
-  reducers: {},
+  reducers: {
+    editUserInfo: (state, { payload }: PayloadAction<User>) => {
+      const foundUser = state.users.find((u) => u.id === payload.id);
+      if (foundUser) {
+        foundUser.name = payload.name;
+        foundUser.username = payload.username;
+        foundUser.email = payload.email;
+        foundUser.address.city = payload.address.city;
+        foundUser.address.street = payload.address.street;
+        foundUser.address.suite = payload.address.suite;
+      }
+      return {
+        ...state,
+        users: [...state.users],
+      };
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(getUsers.pending, (state) => {
-      // eslint-disable-next-line no-param-reassign
-      state.status = UsersStateStatus.loading;
-      // eslint-disable-next-line no-param-reassign
-      state.error = null;
+      return {
+        ...state,
+        status: UsersStateStatus.loading,
+        error: null,
+      };
     });
     builder.addCase(getUsers.fulfilled, (state, { payload }) => {
-      // eslint-disable-next-line no-param-reassign
-      state.users = payload;
-      // eslint-disable-next-line no-param-reassign
-      state.status = UsersStateStatus.idle;
+      return {
+        ...state,
+        users: payload,
+        status: UsersStateStatus.idle,
+      };
     });
     builder.addCase(getUsers.rejected, (state, { payload }) => {
       if (payload) {
@@ -51,6 +69,7 @@ export const usersSlice = createSlice({
   },
 });
 
+export const { editUserInfo } = usersSlice.actions;
 export default usersSlice.reducer;
 
 export const selectUsers = (state: RootState) => state.users.users;
