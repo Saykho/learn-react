@@ -31,7 +31,6 @@ export const UsersInfo: React.FC<UsersInfoType> = ({ user }) => {
         <EditUserInfo
           onSave={(newUser) => {
             setIsEdit(false);
-            console.log(newUser);
             dispatch(editUserInfoTest(newUser));
           }}
           user={user}

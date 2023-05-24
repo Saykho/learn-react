@@ -3,6 +3,8 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { getUsers } from "@store/actions/get-users";
 // eslint-disable-next-line import/no-cycle
 import { RootState } from "@store/index";
+import { createReducer } from "@reduxjs/toolkit/src";
+import { editUserInfo } from "@store/actions/users";
 
 export enum UsersStateStatus {
   idle = "idle",
@@ -24,52 +26,95 @@ const initialState: UsersState = {
 };
 
 // TODO: createReducer
-export const usersSlice = createSlice({
-  name: "users",
-  initialState,
-  reducers: {
-    editUserInfoTest: (state, { payload }: PayloadAction<User>) => {
-      const foundUser = state.users.find((u) => u.id === payload.id);
+export const userReducer = createReducer(initialState, (builder) => {
+  builder
+    .addCase(editUserInfo, (state, { payload }) => {
+      const foundUser = state.users.find((u) => u.id === payload.user.id);
       if (foundUser) {
-        foundUser.name = payload.name;
-        foundUser.username = payload.username;
-        foundUser.email = payload.email;
-        foundUser.address.city = payload.address.city;
-        foundUser.address.street = payload.address.street;
-        foundUser.address.suite = payload.address.suite;
+        foundUser.name = payload.user.name;
+        foundUser.username = payload.user.username;
+        foundUser.email = payload.user.email;
+        foundUser.address.city = payload.user.address.city;
+        foundUser.address.street = payload.user.address.street;
+        foundUser.address.suite = payload.user.address.suite;
       }
-    },
-  },
-  extraReducers: (builder) => {
-    builder.addCase(getUsers.pending, (state) => {
+    })
+    .addCase(getUsers.pending, (state) => {
       return {
         ...state,
         status: UsersStateStatus.loading,
         error: null,
       };
-    });
-    builder.addCase(getUsers.fulfilled, (state, { payload }) => {
+    })
+    .addCase(getUsers.fulfilled, (state, { payload }) => {
       return {
         ...state,
         users: payload,
         status: UsersStateStatus.idle,
       };
-    });
-    builder.addCase(getUsers.rejected, (state, { payload }) => {
+    })
+    .addCase(getUsers.rejected, (state, { payload }) => {
       if (payload) {
-        // eslint-disable-next-line no-param-reassign
-        state.error = payload.message;
+        return {
+          ...state,
+          error: payload.message,
+        };
       }
-      // eslint-disable-next-line no-param-reassign
-      state.status = UsersStateStatus.idle;
+      return {
+        ...state,
+        status: UsersStateStatus.idle,
+      };
     });
-  },
 });
 
-export const { editUserInfoTest } = usersSlice.actions;
-export default usersSlice.reducer;
+// export const usersSlice = createSlice({
+//   name: "users",
+//   initialState,
+//   reducers: {
+//     editUserInfoTest: (state, { payload }: PayloadAction<User>) => {
+//       const foundUser = state.users.find((u) => u.id === payload.id);
+//       if (foundUser) {
+//         foundUser.name = payload.name;
+//         foundUser.username = payload.username;
+//         foundUser.email = payload.email;
+//         foundUser.address.city = payload.address.city;
+//         foundUser.address.street = payload.address.street;
+//         foundUser.address.suite = payload.address.suite;
+//       }
+//     },
+//   },
+//   extraReducers: (builder) => {
+//     builder.addCase(getUsers.pending, (state) => {
+//       return {
+//         ...state,
+//         status: UsersStateStatus.loading,
+//         error: null,
+//       };
+//     });
+//     builder.addCase(getUsers.fulfilled, (state, { payload }) => {
+//       return {
+//         ...state,
+//         users: payload,
+//         status: UsersStateStatus.idle,
+//       };
+//     });
+//     builder.addCase(getUsers.rejected, (state, { payload }) => {
+//       if (payload) {
+//         // eslint-disable-next-line no-param-reassign
+//         state.error = payload.message;
+//       }
+//       // eslint-disable-next-line no-param-reassign
+//       state.status = UsersStateStatus.idle;
+//     });
+//   },
+// });
 
-export const selectUsers = (state: RootState) => state.users.users;
-export const selectStatus = (state: RootState) => state.users.status;
-export const selectUsersLoading = (state: RootState) =>
-  state.users.status === UsersStateStatus.loading;
+export const
+
+// export const { editUserInfoTest } = usersSlice.actions;
+// export default usersSlice.reducer;
+//
+// export const selectUsers = (state: RootState) => state.users.users;
+// export const selectStatus = (state: RootState) => state.users.status;
+// export const selectUsersLoading = (state: RootState) =>
+//   state.users.status === UsersStateStatus.loading;
