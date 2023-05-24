@@ -7,7 +7,7 @@ import {
 } from "@ant-design/icons";
 import { User } from "@models/user.model";
 import { EditUserInfo } from "@features/users/editUserInfo";
-import { editUserInfoTest } from "@store/reducers/user";
+import { editUserInfo } from "@store/actions/users";
 import { useAppDispatch } from "../../../hooks";
 
 type UsersInfoType = {
@@ -31,7 +31,7 @@ export const UsersInfo: React.FC<UsersInfoType> = ({ user }) => {
         <EditUserInfo
           onSave={(newUser) => {
             setIsEdit(false);
-            dispatch(editUserInfoTest(newUser));
+            dispatch(editUserInfo(newUser));
           }}
           user={user}
         />

@@ -1,10 +1,10 @@
 import { User } from "@models/user.model";
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { getUsers } from "@store/actions/get-users";
 // eslint-disable-next-line import/no-cycle
 import { RootState } from "@store/index";
 import { createReducer } from "@reduxjs/toolkit/src";
 import { editUserInfo } from "@store/actions/users";
+import { createSelector } from "@reduxjs/toolkit";
 
 export enum UsersStateStatus {
   idle = "idle",
@@ -108,13 +108,14 @@ export const userReducer = createReducer(initialState, (builder) => {
 //     });
 //   },
 // });
-
-export const
-
 // export const { editUserInfoTest } = usersSlice.actions;
 // export default usersSlice.reducer;
 //
-// export const selectUsers = (state: RootState) => state.users.users;
-// export const selectStatus = (state: RootState) => state.users.status;
-// export const selectUsersLoading = (state: RootState) =>
-//   state.users.status === UsersStateStatus.loading;
+export const usersSelector = createSelector(
+  (state: RootState) => state.users.users,
+  (users) => users,
+);
+export const selectUsers = (state: RootState) => state.users.users;
+export const selectStatus = (state: RootState) => state.users.status;
+export const selectUsersLoading = (state: RootState) =>
+  state.users.status === UsersStateStatus.loading;

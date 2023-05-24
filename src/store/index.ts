@@ -1,11 +1,11 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { configureStore } from "@reduxjs/toolkit";
 // eslint-disable-next-line import/no-cycle
-import usersReducer from "@store/reducers/user";
+import { userReducer } from "@store/reducers/user";
 
 export const store = configureStore({
   reducer: {
-    users: usersReducer,
+    users: userReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({ serializableCheck: false }),
