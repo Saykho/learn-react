@@ -1,10 +1,7 @@
 import { User } from "@models/user.model";
-import { getUsers } from "@store/actions/get-users";
-// eslint-disable-next-line import/no-cycle
-import { RootState } from "@store/index";
-import { createReducer } from "@reduxjs/toolkit/src";
-import { editUserInfo } from "@store/actions/users";
-import { createSelector } from "@reduxjs/toolkit";
+import { createReducer, createSelector } from "@reduxjs/toolkit";
+import { editUserInfoAction } from "../actions/users";
+import { getUsers } from "../actions/get-users";
 
 export enum UsersStateStatus {
   idle = "idle",
@@ -28,7 +25,7 @@ const initialState: UsersState = {
 // TODO: createReducer
 export const userReducer = createReducer(initialState, (builder) => {
   builder
-    .addCase(editUserInfo, (state, { payload }) => {
+    .addCase(editUserInfoAction, (state, { payload }) => {
       const foundUser = state.users.find((u) => u.id === payload.user.id);
       if (foundUser) {
         foundUser.name = payload.user.name;
@@ -111,11 +108,13 @@ export const userReducer = createReducer(initialState, (builder) => {
 // export const { editUserInfoTest } = usersSlice.actions;
 // export default usersSlice.reducer;
 //
-export const usersSelector = createSelector(
-  (state: RootState) => state.users.users,
-  (users) => users,
-);
-export const selectUsers = (state: RootState) => state.users.users;
-export const selectStatus = (state: RootState) => state.users.status;
-export const selectUsersLoading = (state: RootState) =>
-  state.users.status === UsersStateStatus.loading;
+
+type WithUsersState = {
+  users: UsersState;
+};
+
+const usersStateSelector = (state: WithUsersState): UsersState => state.users;
+
+export const getUsersSelector = createSelector(usersStateSelector, (state) => {
+  return state.users;
+});

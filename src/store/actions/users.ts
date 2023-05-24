@@ -1,6 +1,6 @@
-import { createAction } from "@reduxjs/toolkit/src";
+import { createAction } from "@reduxjs/toolkit";
 import { User } from "@models/user.model";
 
-export const editUserInfo = createAction<{
+export const editUserInfoAction = createAction<{
   user: User;
 }>("USERS/EDIT_USER_INFO");

@@ -4,13 +4,15 @@ import React, { useEffect, useState } from "react";
 import { UserInfo } from "@features/users";
 import { getUsers } from "@store/actions/get-users";
 import { UsersInfo } from "@features/users/usersInfo";
+import { useSelector } from "react-redux";
+import { getUsersSelector } from "@store/reducers/user";
 import styles from "./UserLayout.module.scss";
-import { useAppDispatch, useAppSelector } from "../../../hooks";
+import { useAppDispatch } from "../../../hooks/hooks";
 
 export const UserLayout: React.FC = () => {
   const [isOpenModal, setIsOpenModal] = useState(false);
   const dispatch = useAppDispatch();
-  const users = useAppSelector((state) => state.users.users);
+  const users = useSelector(getUsersSelector);
 
   useEffect(() => {
     dispatch(getUsers());
