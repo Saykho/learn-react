@@ -1,7 +1,6 @@
 import { User } from "@models/user.model";
 import { createReducer, createSelector } from "@reduxjs/toolkit";
-import { editUserInfoAction } from "../actions/users";
-import { getUsers } from "../actions/get-users";
+import { editUserInfoAction, getUsers } from "@store/actions";
 
 export enum UsersStateStatus {
   idle = "idle",

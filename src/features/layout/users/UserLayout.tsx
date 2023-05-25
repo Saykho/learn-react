@@ -2,10 +2,10 @@ import { ZoomInOutlined } from "@ant-design/icons";
 import { Button, Col, Modal, Row, Space, Typography } from "antd";
 import React, { useEffect, useState } from "react";
 import { UserInfo } from "@features/users";
-import { getUsers } from "@store/actions/get-users";
 import { UsersInfo } from "@features/users/usersInfo";
 import { useSelector } from "react-redux";
 import { getUsersSelector } from "@store/reducers/user";
+import { getUsers } from "@store/actions";
 import styles from "./UserLayout.module.scss";
 import { useAppDispatch } from "../../../hooks/hooks";
 
