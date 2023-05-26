@@ -1,4 +1,4 @@
-import { Address } from "@models/address.model";
+import { Address } from "@models/address";
 
 export interface User {
   id: number;

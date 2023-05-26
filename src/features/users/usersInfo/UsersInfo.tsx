@@ -5,10 +5,10 @@ import {
   EllipsisOutlined,
   SettingOutlined,
 } from "@ant-design/icons";
-import { User } from "@models/user.model";
+import { User } from "@models/user";
 import { EditUserInfo } from "@features/users/editUserInfo";
 import { editUserInfoAction } from "@store/actions/users";
-import { useAppDispatch } from "../../../hooks/hooks";
+import { useDispatch } from "react-redux";
 
 type UsersInfoType = {
   user: User;
@@ -16,7 +16,7 @@ type UsersInfoType = {
 
 export const UsersInfo: React.FC<UsersInfoType> = ({ user }) => {
   const [isEdit, setIsEdit] = useState(false);
-  const dispatch = useAppDispatch();
+  const dispatch = useDispatch();
 
   return (
     <Card

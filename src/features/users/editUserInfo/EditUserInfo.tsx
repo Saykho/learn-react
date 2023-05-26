@@ -1,6 +1,6 @@
 import React from "react";
 import { Button, Form, Input, Space } from "antd";
-import { User } from "@models/user.model";
+import { User } from "@models/user";
 
 type EditUserInfoType = {
   user: User;
