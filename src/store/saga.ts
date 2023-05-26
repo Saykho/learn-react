@@ -2,6 +2,7 @@
 import createSagaMiddleware from "redux-saga";
 import { userReducer } from "@store/reducers";
 import { configureStore } from "@reduxjs/toolkit";
+import { watchGetUsers } from "@store/actions";
 
 const sagaMiddleware = createSagaMiddleware();
 export const store = configureStore({
@@ -10,4 +11,4 @@ export const store = configureStore({
   },
   middleware: [sagaMiddleware],
 });
-sagaMiddleware.run();
+sagaMiddleware.run(watchGetUsers);

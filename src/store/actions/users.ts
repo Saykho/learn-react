@@ -1,5 +1,5 @@
 import { call, put, takeEvery } from "typed-redux-saga";
-import { createAction, createAsyncThunk } from "@reduxjs/toolkit";
+import { createAction } from "@reduxjs/toolkit";
 import { User } from "@models/user.model";
 import { HttpClient } from "@httpClient/http-client";
 
@@ -7,9 +7,10 @@ export const editUserInfoAction = createAction<{
   user: User;
 }>("USERS/EDIT_USER_INFO");
 
+export const getUsersRequest = createAction("USERS/GET_USERS_REQUEST");
 export const getUsersSuccess = createAction<User[]>("USERS/GET_USERS_SUCCESS");
 export const getUsersFailure = createAction<{
-  message: string;
+  error: any;
 }>("USERS/GET_USERS_FAILURE");
 // interface GetUsersError {
 //   message: string;
@@ -20,17 +21,17 @@ const getUsersFromApi = async () => {
   return response;
 };
 
-function* getUsers(): any {
+export function* getUsers(): any {
   try {
     const users = yield call(getUsersFromApi);
-    yield put(getUsersSuccess(users));
+    yield put({ type: getUsersSuccess, users });
   } catch (error: any) {
-    yield put(getUsersFailure);
+    yield put({ type: getUsersFailure, error });
   }
 }
 
 export function* watchGetUsers() {
-  yield takeEvery(getUsersSuccess, getUsers);
+  yield takeEvery(getUsersRequest, getUsers);
 }
 
 // export const getUsers = createAsyncThunk<

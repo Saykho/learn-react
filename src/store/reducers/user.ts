@@ -1,6 +1,10 @@
 import { User } from "@models/user.model";
 import { createReducer, createSelector } from "@reduxjs/toolkit";
-import { editUserInfoAction, getUsers } from "@store/actions";
+import {
+  editUserInfoAction,
+  getUsersFailure,
+  getUsersSuccess,
+} from "@store/actions";
 
 export enum UsersStateStatus {
   idle = "idle",
@@ -35,25 +39,18 @@ export const userReducer = createReducer(initialState, (builder) => {
         foundUser.address.suite = payload.user.address.suite;
       }
     })
-    .addCase(getUsers.pending, (state) => {
-      return {
-        ...state,
-        status: UsersStateStatus.loading,
-        error: null,
-      };
-    })
-    .addCase(getUsers.fulfilled, (state, { payload }) => {
+    .addCase(getUsersSuccess, (state, { payload }) => {
       return {
         ...state,
         users: payload,
         status: UsersStateStatus.idle,
       };
     })
-    .addCase(getUsers.rejected, (state, { payload }) => {
+    .addCase(getUsersFailure, (state, { payload }) => {
       if (payload) {
         return {
           ...state,
-          error: payload.message,
+          error: payload.error,
         };
       }
       return {
@@ -61,6 +58,32 @@ export const userReducer = createReducer(initialState, (builder) => {
         status: UsersStateStatus.idle,
       };
     });
+  // .addCase(getUsers.pending, (state) => {
+  //   return {
+  //     ...state,
+  //     status: UsersStateStatus.loading,
+  //     error: null,
+  //   };
+  // })
+  // .addCase(getUsers.fulfilled, (state, { payload }) => {
+  //   return {
+  //     ...state,
+  //     users: payload,
+  //     status: UsersStateStatus.idle,
+  //   };
+  // })
+  // .addCase(getUsers.rejected, (state, { payload }) => {
+  //   if (payload) {
+  //     return {
+  //       ...state,
+  //       error: payload.message,
+  //     };
+  //   }
+  //   return {
+  //     ...state,
+  //     status: UsersStateStatus.idle,
+  //   };
+  // });
 });
 
 // export const usersSlice = createSlice({
