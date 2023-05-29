@@ -9,14 +9,14 @@ import {
 import { LoadingSlot } from "@enums/loadingSlot";
 
 export function* getUsersSaga(): SagaGenerator<void> {
+  yield* put(
+    setLoadingAction({
+      slot: LoadingSlot.GET_USERS,
+      loading: true,
+    }),
+  );
   try {
     const users = yield* call(HttpClient.get<User[]>, `users`);
-    yield* put(
-      setLoadingAction({
-        slot: LoadingSlot.GET_USERS,
-        loading: true,
-      }),
-    );
     yield* delay(1000);
     yield* put(getUsersSuccessAction(users));
   } catch (error: any) {
